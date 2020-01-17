@@ -2,6 +2,10 @@
 
 R package to scrape content like mission statements and social media handles from nonprofit websites
 
+* input website URL
+* specify node types
+* get tidy dataset with URL + node content 
+
 
 ## Use
 
