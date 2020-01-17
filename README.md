@@ -1,8 +1,20 @@
 # webscraper
+
 R package to scrape content like mission statements and social media handles from nonprofit websites
 
 
-Package build steps: 
+## Task List
+
+https://help.github.com/en/github/managing-your-work-on-github/about-task-lists
+
+- [x] Task 01
+- [ ] Task 02
+- [ ] Task 03
+
+
+## Package Build Steps
+
+
 
 (1) Install tools:
 
