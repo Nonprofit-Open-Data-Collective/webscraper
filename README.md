@@ -3,6 +3,19 @@
 R package to scrape content like mission statements and social media handles from nonprofit websites
 
 
+```r
+library( dplyr )     # data wrangling 
+library( pander )    # document creation 
+library( xml2 )      # xml manipulation 
+library( RCurl )     # for url.exists
+library( httr )      # for http_error
+library( stringr )   # for str_extract
+library( rvest )     # web scraping in R 
+
+devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
+library( webscraper )
+```
+
 ## Task List
 
 ### [:ballot_box_with_check: KanBan Board](https://github.com/Nonprofit-Open-Data-Collective/webscraper/projects/1) 
