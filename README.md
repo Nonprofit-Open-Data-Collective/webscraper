@@ -12,7 +12,7 @@ install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
 # devtools::build_github_devtools() 
 ```
 
-Create package skeleton:
+(2) Create package skeleton:
 
 ```r
 # has been deprecated - needs update
@@ -22,7 +22,7 @@ has_devel()
 devtools::create( "pe" )
 ```
 
-Document: 
+(3) Document: 
 
 Complete roxygen comments in R files for functions, then:
 
@@ -31,7 +31,7 @@ setwd( "pe" )
 document()
 ```
 
-Install:
+(4) Install:
 
 ```r
 setwd( ".." )
