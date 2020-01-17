@@ -5,6 +5,8 @@ R package to scrape content like mission statements and social media handles fro
 
 ## Task List
 
+[](https://github.com/Nonprofit-Open-Data-Collective/webscraper/projects/1)
+
 https://help.github.com/en/github/managing-your-work-on-github/about-task-lists
 
 - [x] Task 01
@@ -14,7 +16,7 @@ https://help.github.com/en/github/managing-your-work-on-github/about-task-lists
 
 ## Package Build Steps
 
-
+@icn-camera 
 
 (1) Install tools:
 
