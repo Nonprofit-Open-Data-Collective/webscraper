@@ -3,6 +3,17 @@
 R package to scrape content like mission statements and social media handles from nonprofit websites
 
 
+## Use
+
+Install: 
+
+```r
+devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
+library( webscraper )
+```
+
+Useful packages: 
+
 ```r
 library( dplyr )     # data wrangling 
 library( pander )    # document creation 
@@ -11,10 +22,27 @@ library( RCurl )     # for url.exists
 library( httr )      # for http_error
 library( stringr )   # for str_extract
 library( rvest )     # web scraping in R 
-
-devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
-library( webscraper )
 ```
+
+```r
+load_test_urls()
+head( sample.urls )
+
+sample.urls$clean.urls <- cleanURLtoDownload( sample.urls$ORGURL )
+sample.urls$ORGNAME <- gsub( " $", "", sample.urls$ORGNAME ) # remove any trailing spaces
+
+# Using the URLs column from the input file
+URL.values <- sample.urls$clean.urls
+
+compiled.URLs <- c() #object used to collect every URL compiled throughout the process, the full list for each provided site.
+
+URL.redirect <- c()
+input.URL <- c() #holds the URLs provided at the start of each iteration, before any cropping
+  
+head( URL.values )
+```
+
+
 
 ## Task List
 
