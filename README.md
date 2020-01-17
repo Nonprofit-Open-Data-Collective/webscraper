@@ -16,7 +16,7 @@ https://help.github.com/en/github/managing-your-work-on-github/about-task-lists
 
 ## Package Build Steps
 
-@icn-camera 
+:ballot_box_with_check:
 
 (1) Install tools:
 
