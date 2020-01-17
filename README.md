@@ -7,11 +7,13 @@ R package to scrape content like mission statements and social media handles fro
 
 ### [:ballot_box_with_check: KanBan Board](https://github.com/Nonprofit-Open-Data-Collective/webscraper/projects/1) 
 
-https://help.github.com/en/github/managing-your-work-on-github/about-task-lists
 
 - [x] Task 01
 - [ ] Task 02
 - [ ] Task 03
+
+https://help.github.com/en/github/managing-your-work-on-github/about-task-lists
+
 
 
 ## Package Build Steps
