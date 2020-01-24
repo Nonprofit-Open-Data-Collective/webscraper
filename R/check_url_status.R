@@ -5,12 +5,12 @@ check_url_status <- function( input.URL ){
 
   result[["URL"]] <- input.URL #store the url being checked
   result[["Type"]] <- "raw"
-  result[["URL.Exists"]] <- url.exists( result[["URL"]] ) 
+  result[["URL.Exists"]] <- RCurl::url.exists( result[["URL"]] ) 
   result[["HTTP.Status"]] <- tryCatch( http_status( GET( result[["URL"]] ) )[[1]] , 
               error = function( e ){ NA } )
   result[["Valid"]] <- result[["URL.Exists"]] && (result[["HTTP.Status"]] == "Success")
 
-  URL.cropped <- str_extract( result[["URL"]], "^https?://w{3}\\.[[:alpha:]]*\\.[[:alpha:]]*" )
+  URL.cropped <- stringr::str_extract( result[["URL"]], "^https?://w{3}\\.[[:alpha:]]*\\.[[:alpha:]]*" )
   
   if( result [["Valid"]] == FALSE && URL.cropped != result[["URL"]] ){
           result_cropped <- data.frame(matrix(ncol=5,nrow=1,dimnames=list(NULL,
