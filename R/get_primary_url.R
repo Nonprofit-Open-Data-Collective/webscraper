@@ -1,13 +1,13 @@
-get_primary_url <- function ( sample.link ){
+get_primary_url <- function ( sample.link, URL.redirect ){
   
   ## Then test that against the sample link, and extract the common text
   string.shared <- stringr::str_match( sample.link, URL.tail )
   
   ## Drop that from the URL portion after the primary domain
-  URL.redirect.print <- sub( string.shared, "", URL.redirect[ z ] )
+  URL.redirect.print <- sub( string.shared, "", URL.redirect )
   
   ## If there is no tail, then just use the redirected URL as is 
-  if( URL.tail == URL.redirect [ z ] ){ URL.redirect.print <- URL.redirect[ z ] }
+  if( URL.tail == URL.redirect ){ URL.redirect.print <- URL.redirect }
   
   
   ## Paste the modified URL and the sample link, if needed
@@ -35,4 +35,6 @@ get_primary_url <- function ( sample.link ){
   if( length( primary.URLs ) != 0 ){
     if( grepl( "^NA", primary.URL ) ){ primary.URL <- NA } # for situations where URL redirect test creates NA at start of string
   }
+  
+  return ( primary.URL )
 }
