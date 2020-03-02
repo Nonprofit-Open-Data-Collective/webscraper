@@ -1,4 +1,4 @@
-function( input.URL ){
+get_p_node_data <- function( input.URL ){
   internal.links <- get_internal_links( input.URL )
   
   results.list <- NULL
