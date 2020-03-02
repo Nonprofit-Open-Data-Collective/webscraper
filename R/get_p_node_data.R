@@ -2,6 +2,7 @@ function( input.URL ){
   internal.links <- get_internal_links( input.URL )
   
   results.list <- NULL
+  results.df <- NULL
   
   URL.list <- NULL
   domain.list <- NULL
@@ -13,14 +14,16 @@ function( input.URL ){
     data.list[[i]] <- ContentScraper(Url= internal.links[i], XpathPatterns = "//*/p", ManyPerPattern = T)[[1]]
     data.list[[i]] <- data.list[[i]][data.list[[i]] != ""] #remove all empty elements
     
-    URL.list[[i]] <- internal.links[i]
-    domain.list[[i]] <- input.URL
-    page.list[[i]] <- stringr::str_remove(internal.links[i], input.URL)
-    tag.list[[i]] <- "p"
+    URL.list[[i]] <- rep(internal.links[i], length(data.list[[i]]))
+    domain.list[[i]] <- rep(input.URL, length(data.list[[i]]))
+    page.list[[i]] <- rep(stringr::str_remove(internal.links[i], input.URL), length(data.list[[i]]))
+    tag.list[[i]] <- rep("p", length(data.list[[i]]))
+    
+    results.list[[i]] <- dplyr::bind_cols(list(URL=URL.list[[i]], domain=domain.list[[i]], page=page.list[[i]], data=data.list[[i]], tag=tag.list[[i]]))
   }
   
-  results.df <- dplyr::bind_cols( URL.list, domain.list, page.list, data.list, tag.list )
-
+  results.df <- dplyr::bind_rows( results.list )
+  
+  return(results.df)
 }
-
 
