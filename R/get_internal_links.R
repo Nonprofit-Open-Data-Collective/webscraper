@@ -1,4 +1,4 @@
-function( input.URL ){
+get_internal_links <- function( input.URL ){
   
   page <- Rcrawler::LinkExtractor(url = input.URL)
   
