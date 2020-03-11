@@ -1,5 +1,5 @@
 get_p_node_data <- function( input.URL ){
-  internal.links <- get_internal_links( input.URL )
+  internal.links <- Rcrawler::LinkExtractor(url = input.URL)$InternalLinks
   
   results.list <- NULL
   results.df <- NULL
