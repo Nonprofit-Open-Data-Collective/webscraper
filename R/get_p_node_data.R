@@ -11,7 +11,7 @@ get_p_node_data <- function( input.URL ){
   tag.list <- NULL
 
   for ( i in 1:length(internal.links) ){
-    data.list[[i]] <- ContentScraper(Url= internal.links[i], XpathPatterns = "//*/p", ManyPerPattern = T)[[1]]
+    data.list[[i]] <- Rcrawler::ContentScraper(Url= internal.links[i], XpathPatterns = "//*/p", ManyPerPattern = T)[[1]]
     data.list[[i]] <- data.list[[i]][data.list[[i]] != ""] #remove all empty elements
     
     URL.list[[i]] <- rep(internal.links[i], length(data.list[[i]]))
