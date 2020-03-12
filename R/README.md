@@ -106,6 +106,7 @@ It’s also a good place to put the package level import statements that you’l
 
 [EXAMPLE from DPLYR](https://github.com/cran/dplyr/blob/master/R/dplyr.r)
 
+See [PAGE 4](https://cran.r-project.org/web/packages/dplyr/dplyr.pdf) for rendered version. 
 
 ## importing packages and functions
 
