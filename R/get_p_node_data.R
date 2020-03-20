@@ -1,13 +1,17 @@
 #' @title
-#' Create a data frame that contains texts inside p nodes in every internal websites in a given URL
+#' Create a data frame that contains information about p nodes in every internal links in a given URL
 #' @description
-#'
+#' First, this function finds redirected url from given url. This redirected url is used for
+#' subsequent parts of this function. It makes a list of internal links using LinkExtractor function
+#' in Rcrawler package. Then, information related to every p nodes in each internal link is scraped and
+#' combined in a data frame. This information include xpath, text, url, domain, and tag.
 #' @details
 #' @param input.URL An URL for searching every p nodes in its interal links
 #' @return A data frame
 #' @export
 #' @examples
-#'
+#' input.URL <- "https://sites.google.com/view/gmfr"
+#' get_p_node_data( input.URL )
 #' @importFrom magrittr %>%
 
 get_p_node_data <- function( input.URL ){
@@ -22,20 +26,20 @@ get_p_node_data <- function( input.URL ){
   URL.list <- NULL
   domain.list <- NULL
   page.list <- NULL
-  data.list <- NULL
+  text.list <- NULL
   tag.list <- NULL
 
   for ( i in 1:length(internal.links) ){
     node.list[[i]] <- xml2::read_html(internal.links[i]) %>% xml2::xml_find_all('//*/p')
     xpath.list[[i]] <- node.list[[i]] %>% xml2::xml_path()
-    data.list[[i]] <- node.list[[i]] %>% xml2::xml_text()
+    text.list[[i]] <- node.list[[i]] %>% xml2::xml_text()
 
-    URL.list[[i]] <- rep(internal.links[i], length(data.list[[i]]))
-    domain.list[[i]] <- rep(input.URL, length(data.list[[i]]))
-    page.list[[i]] <- rep(stringr::str_remove(internal.links[i], input.URL), length(data.list[[i]]))
-    tag.list[[i]] <- rep("p", length(data.list[[i]]))
+    URL.list[[i]] <- rep(internal.links[i], length(text.list[[i]]))
+    domain.list[[i]] <- rep(input.URL, length(text.list[[i]]))
+    page.list[[i]] <- rep(stringr::str_remove(internal.links[i], input.URL), length(text.list[[i]]))
+    tag.list[[i]] <- rep("p", length(text.list[[i]]))
 
-    results.list[[i]] <- dplyr::bind_cols(list(URL=URL.list[[i]], domain=domain.list[[i]], page=page.list[[i]], xpath=xpath.list[[i]], data=data.list[[i]], tag=tag.list[[i]]))
+    results.list[[i]] <- dplyr::bind_cols(list(URL=URL.list[[i]], domain=domain.list[[i]], page=page.list[[i]], xpath=xpath.list[[i]], text=text.list[[i]], tag=tag.list[[i]]))
   }
 
   results.df <- dplyr::bind_rows( results.list )
