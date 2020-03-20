@@ -1,7 +1,7 @@
 #' @title
 #' Create a data frame that contains information about p nodes in every internal links in a given URL
 #' @description
-#' First, this function finds redirected url from given url. This redirected url is used for
+#' First, this function finds redirected url from a given url. This redirected url is used for
 #' subsequent parts of this function. It makes a list of internal links using LinkExtractor function
 #' in Rcrawler package. Then, information related to every p nodes in each internal link is scraped and
 #' combined in a data frame. This information include xpath, text, url, domain, and tag.
