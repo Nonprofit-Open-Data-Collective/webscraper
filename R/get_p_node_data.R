@@ -1,3 +1,13 @@
+#' @title
+#' Create a data frame that contains texts inside p nodes in every internal websites in a given URL
+#' @description
+#'
+#' @details
+#' @param input.URL An URL for searching every p nodes in its interal links
+#' @return A data frame
+#' @export
+#' @examples
+#'
 #' @importFrom magrittr %>%
 
 get_p_node_data <- function( input.URL ){
