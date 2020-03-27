@@ -9,12 +9,6 @@ R package to scrape content like mission statements and social media handles fro
 
 ## Use
 
-Install: 
-
-```r
-devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
-library( webscraper )
-```
 
 Useful packages: 
 
@@ -27,6 +21,16 @@ library( httr )      # for http_error
 library( stringr )   # for str_extract
 library( rvest )     # web scraping in R 
 ```
+
+
+Install: 
+
+```r
+devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
+library( webscraper )
+```
+
+
 
 ### Demo Get Nodes Function
 
