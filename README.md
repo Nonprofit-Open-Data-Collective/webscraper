@@ -28,6 +28,97 @@ library( stringr )   # for str_extract
 library( rvest )     # web scraping in R 
 ```
 
+### Demo Get Nodes Function
+
+```r
+# example URL
+url <- "HTTP://GMFD.ORG/GMFRA/GMFRAINDEX.HTM"
+dat <- get_p_node_data( url )
+head( as.data.frame( dat ) )
+```
+
+
+
+----------------------------------------------------
+                        URL                         
+----------------------------------------------------
+ https://sites.google.com/view/gmfr/fire-department 
+
+ https://sites.google.com/view/gmfr/fire-department 
+
+ https://sites.google.com/view/gmfr/fire-department 
+
+ https://sites.google.com/view/gmfr/fire-department 
+
+ https://sites.google.com/view/gmfr/fire-department 
+
+ https://sites.google.com/view/gmfr/fire-department 
+----------------------------------------------------
+
+Table: Table continues below
+
+ 
+-------------------------------------------------------
+               domain                       page       
+------------------------------------ ------------------
+ https://sites.google.com/view/gmfr   /fire-department 
+
+ https://sites.google.com/view/gmfr   /fire-department 
+
+ https://sites.google.com/view/gmfr   /fire-department 
+
+ https://sites.google.com/view/gmfr   /fire-department 
+
+ https://sites.google.com/view/gmfr   /fire-department 
+
+ https://sites.google.com/view/gmfr   /fire-department 
+-------------------------------------------------------
+
+Table: Table continues below
+
+ 
+-------------------------------------------------------------------------------------------------------------------
+                                                       xpath                                                       
+-------------------------------------------------------------------------------------------------------------------
+ /html/body/div[1]/div/div[2]/div[2]/div[1]/section[2]/div[2]/div/div[1]/div/div/div[1]/div/div/div/div/a/div[1]/p 
+
+ /html/body/div[1]/div/div[2]/div[2]/div[1]/section[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div/div/a/div[1]/p 
+
+ /html/body/div[1]/div/div[2]/div[2]/div[1]/section[2]/div[2]/div/div[2]/div/div/div[1]/div/div/div/div/a/div[1]/p 
+
+ /html/body/div[1]/div/div[2]/div[2]/div[1]/section[2]/div[2]/div/div[2]/div/div/div[2]/div/div/div/div/a/div[1]/p 
+
+ /html/body/div[1]/div/div[2]/div[2]/div[1]/section[2]/div[2]/div/div[3]/div/div/div[1]/div/div/div/div/a/div[1]/p 
+
+ /html/body/div[1]/div/div[2]/div[2]/div[1]/section[2]/div[2]/div/div[3]/div/div/div[2]/div/div/div/div/a/div[1]/p 
+-------------------------------------------------------------------------------------------------------------------
+
+Table: Table continues below
+
+ 
+------------------------------
+          text            tag 
+------------------------ -----
+    CUSTOMER SURVEY        p  
+
+ COMPLAINT / COMPLIMENT    p  
+
+       EMPLOYMENT          p  
+
+    BURNING PERMITS        p  
+
+     CHIEF 8-1 BLOG        p  
+
+    CHIEF'S REPORTS        p  
+------------------------------
+
+
+
+
+
+
+### Sample Org Dataset
+
 ```r
 load_test_urls()
 head( sample.urls )
