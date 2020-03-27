@@ -7,6 +7,21 @@ R package to scrape content like mission statements and social media handles fro
 * get tidy dataset with URL + node content 
 
 
+The package operates by doing the following:
+
+1. User selects an org URL. 
+2. clean and parse
+3. test site
+
+
+...
+
+8. return tidy format 
+
+
+
+
+
 ## Use
 
 
