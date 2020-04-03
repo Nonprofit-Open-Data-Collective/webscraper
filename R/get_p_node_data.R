@@ -10,7 +10,7 @@
 #' @return A data frame
 #' @export
 #' @examples
-#' input.URL <- "https://sites.google.com/view/gmfr"
+#' input.URL <- "HTTP://GMFD.ORG/GMFRA/GMFRAINDEX.HTM"
 #' get_p_node_data( input.URL )
 #' @importFrom magrittr %>%
 
