@@ -15,12 +15,13 @@
 #' @importFrom magrittr %>%
 
 get_p_node_data <- function( input.URL ){
-  input.URL <- get_redirected_url( input.URL )
-  internal.links <- Rcrawler::LinkExtractor(url = input.URL)$InternalLinks
+  redirected.URL <- get_redirected_url( input.URL )
+  internal.links <- Rcrawler::LinkExtractor(url = redirected.URL)$InternalLinks
 
   results.list <- NULL
   results.df <- NULL
 
+  input.URL.list <-NULL
   node.list <- NULL
   xpath.list <- NULL
   URL.list <- NULL
@@ -34,16 +35,17 @@ get_p_node_data <- function( input.URL ){
     xpath.list[[i]] <- node.list[[i]] %>% xml2::xml_path()
     text.list[[i]] <- node.list[[i]] %>% xml2::xml_text()
 
+    input.URL.list[[i]] <- rep(input.URL, length(text.list[[i]]))
     URL.list[[i]] <- rep(internal.links[i], length(text.list[[i]]))
-    domain.list[[i]] <- rep(input.URL, length(text.list[[i]]))
-    page.list[[i]] <- rep(stringr::str_remove(internal.links[i], input.URL), length(text.list[[i]]))
+    domain.list[[i]] <- rep(redirected.URL, length(text.list[[i]]))
+    page.list[[i]] <- rep(stringr::str_remove(internal.links[i], redirected.URL), length(text.list[[i]]))
     tag.list[[i]] <- rep("p", length(text.list[[i]]))
 
-    results.list[[i]] <- dplyr::bind_cols(list(URL=URL.list[[i]], domain=domain.list[[i]], page=page.list[[i]], xpath=xpath.list[[i]], text=text.list[[i]], tag=tag.list[[i]]))
+    results.list[[i]] <- dplyr::bind_cols(list(input.URL=input.URL.list[[i]], redirected.URL=domain.list[[i]], URL=URL.list[[i]], page=page.list[[i]], xpath=xpath.list[[i]], text=text.list[[i]], tag=tag.list[[i]]))
   }
 
   results.df <- dplyr::bind_rows( results.list )
 
-  return(results.df)
+  return( as.data.frame(results.df) )
 }
 
