@@ -1,3 +1,16 @@
+#' @title
+#' Get a redirected URL from an input URL
+#' @description
+#' This function returns a redirected URL. If the website of input URL is contained within a frame, 
+#' it extract the URL embedded within the frame and use that URL as the redirect value.
+#' @details
+#' @param input.URL An URL
+#' @return An URL redirected 
+#' @export
+#' @examples
+#' input.URL <- "HTTP://GMFD.ORG/GMFRA/GMFRAINDEX.HTM"
+#' get_redirected_url( input.URL )
+
 get_redirected_url <- function( input.URL ){
         # Add a check if the URL value redirects. If so, that redirected portion is what needs to be pasted to the front of the outgoing link
         URL.redirect <- cleanURLtoCompare( httr::GET( input.URL )[ 1 ] )
