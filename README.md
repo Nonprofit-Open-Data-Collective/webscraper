@@ -7,14 +7,23 @@ R package to scrape content like mission statements and social media handles fro
 * get tidy dataset with URL + node content 
 
 
+The package operates by doing the following:
+
+1. User selects an org URL. 
+2. clean and parse
+3. test site
+
+
+...
+
+8. return tidy format 
+
+
+
+
+
 ## Use
 
-Install: 
-
-```r
-devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
-library( webscraper )
-```
 
 Useful packages: 
 
@@ -27,6 +36,31 @@ library( httr )      # for http_error
 library( stringr )   # for str_extract
 library( rvest )     # web scraping in R 
 ```
+
+
+Install: 
+
+```r
+devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
+library( webscraper )
+```
+
+
+
+### Demo Get Nodes Function
+
+```r
+# example URL
+url <- "HTTP://GMFD.ORG/GMFRA/GMFRAINDEX.HTM"
+dat <- get_p_node_data( url )
+head( as.data.frame( dat ) )
+```
+
+
+
+
+
+### Sample Org Dataset
 
 ```r
 load_test_urls()

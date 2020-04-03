@@ -7,3 +7,10 @@ Depends: R (>= 3.5.2)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Imports:
+  dplyr,
+  httr,
+  rvest,
+  Rcrawler,
+  stringr,
+  xml2
