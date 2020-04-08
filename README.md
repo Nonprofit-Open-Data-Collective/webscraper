@@ -9,15 +9,61 @@ R package to scrape content like mission statements and social media handles fro
 
 The package operates by doing the following:
 
-1. User selects an org URL. 
+1. User provides an org URL
 2. clean and parse
-3. test site
+  - save original version
+  - create normalized version ("http://some-name.com" or "https://some-name.com")
+3. check URL status 
+  - results: exists & active  --> load website (4)
+  - exists & not responding  --> try root domain
+  - does not exist  --> try root domain
+4. identify active host URL 
+  - if redirected, capture redirect 
+
+-----  table 1
+  
+5. load website 
+  - catalog all internal links on the landing page for snowball sample
+  - search for contact info
+    - social media sites
+    - social media handle
+    - (email?)
+7. build node list on current page
+  - capture node data
+  - creating node meta-data
+8. drill down and repeat (how many levels?)
+  - at completion return nodes table (table-02)
+  
 
 
-...
+table-01
+  - org name
+  - org id (unique key)
+  - raw web domain reported by the org
+  - normalized URL
+  - (do we capture root URL here? or parse later?)
+  - domain status (exists?, active?)
+  - "active" URL  (working, stable --> outcome of trying different options)
+  
+table-02
+  - org name
+  - org id (unique key)
+  - date of data capture
+  - "active" URL root
+  - subdomain 
+  - xpath
+  - node type
+  - attributes (html class, etc)
+  - node text
 
-8. return tidy format 
-
+table-03 (social media) - one-to-many (many accounts for one org)
+  - org id
+  - working url
+  - subdomain 
+  - social media type (twitter, linkedin, facebook)
+  - ID - handle or account id
+  
+  
 
 
 
