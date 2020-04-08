@@ -21,5 +21,6 @@ normalize_url <- function( input.URL ){
   
   temp <- paste0("http://www.", temp)
   
-  return( temp )
+  return( list( original_URL = input.URL, normalized_URL = temp ) )
 }
+
