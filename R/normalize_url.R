@@ -1,22 +1,25 @@
 normalize_url <- function( input.URL ){
   temp <- tolower( input.URL )
   
-  has_http_or_https <- grepl( "^https?:/{2}", temp )
-  has_www <- grepl( "www\\.*" , temp)
-    
-  if( has_http_or_https & !has_www){
-    temp <- sub( "^https?:/{2}", "http://www.", temp )
+  temp <- sub( "^https?:/{2}", "", temp ) # remove HTTP(S) protocol from the URL
+  temp <- sub( "^www\\.", "", temp ) # remove www. from the URL
+  temp <- gsub( " ", "", temp ) # removes any " "
+  temp <- gsub( "\\|:", "", temp ) # removes any "\" or ":"
+  temp <- gsub( "\\>/{2}", "/", temp ) # converts any instances of "//" to "/" after the http(s):// head text
+  temp <- gsub( "/$", "", temp ) # remove trailing slash
+  
+  # sort query parameters alphabetically
+  # regex pattern from https://stackoverflow.com/questions/14679113/getting-all-url-parameters-using-regex
+  query_params <- stringr::str_extract_all( temp, "[^&?]*?=[^&?]*" ) %>%
+    unlist() %>% sort() %>% paste0( collapse="&" ) # sort query parameters
+  
+  if( query_params != "" ){
+    query_params <- paste0( "?", query_params )
+    temp <- gsub( "\\?.*", "", temp ) # remove all query parameters
+    temp <- paste0(temp, query_params) # combine query parameters to the URL
   }
   
-  if( !has_http_or_https & has_www){
-    temp <- paste0( "http://", temp )
-  }
-  
-  if( !has_http_or_https & !has_www){
-    temp <- paste0( "http://www.", temp )
-  }
-  
-  temp <- gsub( "/$", "", temp ) # removes any "/" at the end
+  temp <- paste0("http://www.", temp)
   
   return( temp )
 }
