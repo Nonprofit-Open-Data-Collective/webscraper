@@ -19,7 +19,7 @@ normalize_url <- function( input.URL ){
     temp <- paste0(temp, query_params) # combine query parameters to the URL
   }
   
-  temp <- paste0("http://www.", temp)
+  temp <- paste0("http://", temp)
   
   return( list( original_URL = input.URL, normalized_URL = temp ) )
 }

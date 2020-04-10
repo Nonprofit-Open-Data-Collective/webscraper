@@ -14,18 +14,17 @@
 #' get_p_node_data( input.URL )
 
 check_url_status <- function( input.URL ){
-        
   result <- data.frame(matrix(ncol=5,nrow=1,dimnames=list(NULL,
                         c("URL","Type","URL.Exists","HTTP.Status","Valid"))))
 
-  result[["URL"]] <- input.URL #store the url being checked
+  result[["URL"]] <- normalize_url( input.URL ) # normalize the url being checked
   result[["Type"]] <- "raw"
   result[["URL.Exists"]] <- RCurl::url.exists( result[["URL"]] ) 
   result[["HTTP.Status"]] <- tryCatch( httr::http_status( httr::GET( result[["URL"]] ) )[[1]] , 
               error = function( e ){ NA } )
   result[["Valid"]] <- result[["URL.Exists"]] && (result[["HTTP.Status"]] == "Success")
 
-  URL.cropped <- stringr::str_extract( result[["URL"]], "^https?://[[:alpha:]]*\\.[[:alpha:]]*\\.[[:alpha:]]*" )
+  URL.cropped <- stringr::str_extract( result[["URL"]], "^https?://www\\.[[:alpha:]]*\\.[[:alpha:]]*" )
   
   if( result [["Valid"]] == FALSE && URL.cropped != result[["URL"]] ){
           result_cropped <- data.frame(matrix(ncol=5,nrow=1,dimnames=list(NULL,
