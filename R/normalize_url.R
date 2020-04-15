@@ -7,6 +7,7 @@ normalize_url <- function( input.URL ){
   temp <- gsub( "\\|:", "", temp ) # removes any "\" or ":"
   temp <- gsub( "\\>/{2}", "/", temp ) # converts any instances of "//" to "/" after the http(s):// head text
   temp <- gsub( "/$", "", temp ) # remove trailing slash
+  temp <- gsub( "html$", "htm", temp ) # replace html at the end with htm
   
   # sort query parameters alphabetically
   # regex pattern from https://stackoverflow.com/questions/14679113/getting-all-url-parameters-using-regex
@@ -19,8 +20,19 @@ normalize_url <- function( input.URL ){
     temp <- paste0(temp, query_params) # combine query parameters to the URL
   }
   
-  temp <- paste0("http://", temp)
+  # avoid adding "www" in unnecessary cases (e.g. http://www.sites.google.com/view/gmfr)
+  if( grepl("/", temp) ){ # check if url has slash(/)
+    string_before_first_slash <- stringr::str_extract_all( temp, "^(.*?)(?=/)") %>% unlist # extract string before the first '/'
+  } else{
+    string_before_first_slash <- temp
+  }
   
-  return( list( original_URL = input.URL, normalized_URL = temp ) )
+  if ( strsplit(string_before_first_slash, split="\\.") %>% unlist %>% length() == 3 ){
+    temp <- paste0("http://", temp)
+  } else{
+    temp <- paste0("http://www.", temp)
+  }
+  
+  return( temp )
 }
 

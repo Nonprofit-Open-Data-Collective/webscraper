@@ -37,6 +37,6 @@ get_redirected_url <- function( input.URL ){
                         return( URL.redirect )       
                 }
         } else{
-                return "No-Redirects"
+                return( NA )
         }
 }
