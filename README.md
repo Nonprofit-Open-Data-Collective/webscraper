@@ -7,45 +7,69 @@ R package to scrape content like mission statements and social media handles fro
 * get tidy dataset with URL + node content 
 
 
+## Usage
+
 The package operates by doing the following:
 
 1. User provides an org URL
-2. clean and parse
-  - save original version
-  - create normalized version ("http://some-name.com" or "https://some-name.com")
-3. check URL status 
+
+   -- ( **create_table_01()** )  --
+
+2. clean and parse  
+  - save original version  ( **function_name()** )
+  - create normalized version ("http://some-name.com" or "https://some-name.com")   ( **function_name()** )
+  - create root url from normalized  ( **function_name()** )
+3. check URL status  ( **check_url_status()** )
   - results: exists & active  --> load website (4)
   - exists & not responding  --> try root domain
   - does not exist  --> try root domain
 4. identify active host URL 
   - if redirected, capture redirect 
 
------  table 1
-  
+----->  table 1 returned here 
+
+
+
 5. load website 
   - catalog all internal links on the landing page for snowball sample
-  - search for contact info
+  - search for contact info (not yet implemented)
     - social media sites
     - social media handle
     - (email?)
+
+----->  table 3 returned here  (not yet implemented)
+
 7. build node list on current page
   - capture node data
   - creating node meta-data
 8. drill down and repeat (how many levels?)
   - at completion return nodes table (table-02)
   
+----->  table 2 returned here 
 
 
-table-01
+
+
+table-01 (create_table_01 function)
   - org name
   - org id (unique key)
-  - raw web domain reported by the org
-  - normalized URL
-  - (do we capture root URL here? or parse later?)
-  - domain status (exists?, active?)
-  - "active" URL  (working, stable --> outcome of trying different options)
-  
-table-02
+  - **original_URL** - raw web domain reported by the org
+  - **normalized_URL** 
+  - **redirected_URL**
+  - root_URL - root url of original url - http://www.pets.com  [ ROOT VERSION - normalize first, then parse lowest level ]
+  - **active_URL** change tested_URL to active_URL - domain that works  
+  - url_version - version of the URL that works: original, normalized, redirect, or root 
+  - domain_status - change URL.Exists, HTTP.Status and valid to "domain_status": VALID, EXISTS (but http.status = F), DNE (does not exist)
+
+Function try URLS in the following order:
+1. original url
+2. normalized url 
+3. redirected url 
+4. root url 
+
+
+
+table-02  ( get_p_nodes function )
   - org name
   - org id (unique key)
   - date of data capture
@@ -70,27 +94,12 @@ table-03 (social media) - one-to-many (many accounts for one org)
 
 ## Use
 
-
-Useful packages: 
-
-```r
-library( dplyr )     # data wrangling 
-library( pander )    # document creation 
-library( xml2 )      # xml manipulation 
-library( RCurl )     # for url.exists
-library( httr )      # for http_error
-library( stringr )   # for str_extract
-library( rvest )     # web scraping in R 
-```
-
-
 Install: 
 
 ```r
 devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
 library( webscraper )
 ```
-
 
 
 ### Demo Get Nodes Function
@@ -103,27 +112,33 @@ head( as.data.frame( dat ) )
 ```
 
 
+We use the following packages: 
+
+```r
+library( dplyr )     # data wrangling 
+library( pander )    # document creation 
+library( xml2 )      # xml manipulation 
+library( RCurl )     # for url.exists
+library( httr )      # for http_error
+library( stringr )   # for str_extract
+library( rvest )     # web scraping in R 
+```
+
 
 
 
 ### Sample Org Dataset
 
+For a small sample try: 
+
 ```r
 load_test_urls()
 head( sample.urls )
 
-sample.urls$clean.urls <- cleanURLtoDownload( sample.urls$ORGURL )
-sample.urls$ORGNAME <- gsub( " $", "", sample.urls$ORGNAME ) # remove any trailing spaces
+URLs <- sample.urls$ORGURL
 
-# Using the URLs column from the input file
-URL.values <- sample.urls$clean.urls
+create_table_01( URLs[1] )
 
-compiled.URLs <- c() #object used to collect every URL compiled throughout the process, the full list for each provided site.
-
-URL.redirect <- c()
-input.URL <- c() #holds the URLs provided at the start of each iteration, before any cropping
-  
-head( URL.values )
 ```
 
 
