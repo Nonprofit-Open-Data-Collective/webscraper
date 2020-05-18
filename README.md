@@ -102,6 +102,18 @@ library( webscraper )
 ```
 
 
+
+### Before Syncing New Code to GitHub
+
+```r
+# update documentation
+setwd( "webscraper" )
+devtools::document()
+# update code
+setwd( ".." )
+devtools::install( "webscraper" )
+```
+
 ### Demo Get Nodes Function
 
 ```r
