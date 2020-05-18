@@ -24,20 +24,20 @@ check_url_status <- function( input.URL ){
               error = function( e ){ NA } )
   result[["valid"]] <- result[["URL.Exists"]] && (result[["HTTP.Status"]] == "Success")
 
-  URL.cropped <- paste0( "http://", stringr::str_extract_all( result[["tested_URL"]], "(?<=//)(.*?)(?=/)", simplify = TRUE) )
+  root_URL <- create_root_url( input.URL )
   
-  if( result [["valid"]] == FALSE && URL.cropped != result[["tested_URL"]] ){
-          result_cropped <- data.frame(matrix(ncol=5,nrow=1,dimnames=list(NULL,
+  if( result [["valid"]] == FALSE && root_URL != result[["tested_URL"]] ){
+          result_root <- data.frame(matrix(ncol=5,nrow=1,dimnames=list(NULL,
                         c("tested_URL","cropped","URL.Exists","HTTP.Status","valid"))))
           
-          result_cropped[["tested_URL"]] <- URL.cropped #store the url being checked
-          result_cropped[["cropped"]] <- TRUE
-          result_cropped[["URL.Exists"]] <- RCurl::url.exists( result_cropped[["tested_URL"]] )
-          result_cropped[["HTTP.Status"]] <- tryCatch( httr::http_status( httr::GET( result_cropped[["tested_URL"]] ) )[[1]] , 
+          result_root[["tested_URL"]] <- URL.cropped #store the url being checked
+          result_root[["cropped"]] <- TRUE
+          result_root[["URL.Exists"]] <- RCurl::url.exists( result_root[["tested_URL"]] )
+          result_root[["HTTP.Status"]] <- tryCatch( httr::http_status( httr::GET( result_root[["tested_URL"]] ) )[[1]] , 
               error = function( e ){ NA } )
-          result_cropped[["valid"]] <- result_cropped[["URL.Exists"]] && (result_cropped[["HTTP.Status"]] == "Success")
+          result_root[["valid"]] <- result_root[["URL.Exists"]] && (result_root[["HTTP.Status"]] == "Success")
           
-          result <- rbind(result, result_cropped)
+          result <- rbind(result, result_root)
   }
   
   return( result )

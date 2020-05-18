@@ -14,7 +14,7 @@
 get_redirected_url <- function( input.URL ){
         # Add a check if the URL value redirects. If so, that redirected portion is what needs to be pasted to the front of the outgoing link
         http_status_code <- httr::GET( input.URL )$all_headers[[1]]$status
-        is_redirected <- http_status_code >= 300 || http_status_code <= 308
+        is_redirected <- as.integer( http_status_code/100 ) == 3
         
         if( is_redirected ){
                 URL.redirect <- normalize_url( httr::GET( input.URL )[ 1 ] )
