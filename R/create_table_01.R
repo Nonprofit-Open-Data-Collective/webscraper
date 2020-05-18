@@ -1,4 +1,4 @@
-create_table1 <- function( input.URL ){
+create_table_01 <- function( input.URL ){
   result <- list()
   
   df <- check_url_status( input.URL )
