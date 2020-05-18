@@ -19,7 +19,7 @@ create_table_01 <- function( input.URL ){
     domain_status <- check_url_status2( normalized_URL )
     
   } else if( is_redirected ){
-    if( check_url_status2( normalized_URL ) == "VALID" ){
+    if( check_url_status2( redirected_URL ) == "VALID" ){
       active_URL <- redirected_URL
       url_version <- "redirect"
       domain_status <- check_url_status2( redirected_URL )
@@ -32,11 +32,13 @@ create_table_01 <- function( input.URL ){
     }
   }
   
-  df <- check_url_status( input.URL )
+  result$original_URL <- origninal_URL
+  result$normalized_URL <- normalized_URL
+  result$redirected_URL <- redirected_URL
+  result$root_URL <- root_URL
+  result$active_URL <- active_URL
+  result$url_version <- url_version
+  result$domain_status <- domain_status
   
-  result$original_URL <- rep( input.URL, times=nrow(df) )
-  result$normalized_URL <- rep( normalize_url(input.URL), times=nrow(df) )
-  result$redirected_URL <- rep( get_redirected_url(input.URL), times=nrow(df) )
-  
-  return( bind_cols(result, df) )
+  return( result )
 }
