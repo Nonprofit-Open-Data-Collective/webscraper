@@ -32,6 +32,8 @@ create_table_01 <- function( input.URL ){
     }
   }
   
+  result$org_id <- sample.urls$EIN[sample.urls$ORGURL == original_URL]
+  result$org_name <- sample.urls$ORGNAME[sample.urls$ORGURL == original_URL]
   result$original_URL <- original_URL
   result$normalized_URL <- normalized_URL
   result$redirected_URL <- redirected_URL
