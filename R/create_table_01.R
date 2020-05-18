@@ -32,7 +32,7 @@ create_table_01 <- function( input.URL ){
     }
   }
   
-  result$original_URL <- origninal_URL
+  result$original_URL <- original_URL
   result$normalized_URL <- normalized_URL
   result$redirected_URL <- redirected_URL
   result$root_URL <- root_URL
