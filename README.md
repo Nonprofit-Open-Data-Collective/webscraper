@@ -19,7 +19,7 @@ The package operates by doing the following:
   - save original version  ( **create_table_01()** )
   - create normalized version ("http://some-name.com")   ( **normalize_url()** )
   - create root url from normalized  ( **creat_root_url()** )
-3. check URL status  ( **check_url_status()** )
+3. check URL status  ( **check_url_status()** ) --> error in RCurl::url.exists("WWW.BACASMAINE.ORG")
   - results: exists & active  --> load website (4)
   - exists & not responding  --> try root domain
   - does not exist  --> try root domain
