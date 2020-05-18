@@ -3,10 +3,13 @@ create_table_01 <- function( input.URL ){
   
   original_URL <- input.URL
   normalized_URL <- normalize_url( input.URL )
-  http_status_code <- httr::GET( input.URL )$all_headers[[1]]$status
+  http_status_code <- httr::GET( normalized_URL )$all_headers[[1]]$status
   is_redirected <- as.integer( http_status_code/100 ) == 3
-  redirected_URL <- ifelse( is_redirected, get_redirected_url( input.URL ), NA )
+  redirected_URL <- ifelse( is_redirected, get_redirected_url( normalized_URL ), NA )
   root_URL <- create_root_url( normalized_URL )
+  active_URL <- NA
+  url_version <- NA
+  domain_status <- NA
   
   if( check_url_status2( original_URL ) == "VALID" ){
     active_URL <- original_URL
