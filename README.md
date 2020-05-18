@@ -17,8 +17,8 @@ The package operates by doing the following:
 
 2. clean and parse  
   - save original version  ( **create_table_01()** )
-  - create normalized version ("http://www.some-name.com")   ( **normalize_url()** )
-  - create root url from normalized  ( **function_name()** )
+  - create normalized version ("http://some-name.com")   ( **normalize_url()** )
+  - create root url from normalized  ( **creat_root_url()** )
 3. check URL status  ( **check_url_status()** )
   - results: exists & active  --> load website (4)
   - exists & not responding  --> try root domain
