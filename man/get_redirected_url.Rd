@@ -13,7 +13,7 @@ get_redirected_url(input.URL)
 An URL redirected
 }
 \description{
-This function returns a redirected URL. If the website of input URL is contained within a frame, 
+This function returns a redirected URL. If the website of input URL is contained within a frame,
 it extract the URL embedded within the frame and use that URL as the redirect value.
 }
 \examples{

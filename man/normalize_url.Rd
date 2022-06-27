@@ -7,7 +7,7 @@
 normalize_url(input.URL)
 }
 \arguments{
-\item{input.URL}{An URL for searching every p nodes in its interal links}
+\item{input.URL}{An URL for searching every p nodes in its internal links}
 }
 \value{
 A data frame
