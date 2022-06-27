@@ -3,13 +3,11 @@
 #' @description
 #' This functions loads in 20 test URLs from the 1023-EZ forms. These URLs are a sample of the entire URLs provided
 #' intended to check the functionality of the the other URLs cleaning and scraping functions in the package.
+#' @return A data frame of test URLs
 #' @export
+load_test_urls <- function(){
 
-load_test_urls <- function()
-{
-	# load sample of 20 URLs from 1023-EZ forms
-
-	sample.urls <<-
+  sample.urls <<-
 	structure(list(EIN = c("01-0278788", "01-0468034", "01-0512631",
 	"01-0531578", "01-0533351", "01-0604316", "01-0716774", "01-0764856",
 	"01-0791209", "01-0868557", "01-0900532", "01-0963519", "02-0508950",

@@ -5,7 +5,6 @@
 #' subsequent parts of this function. It makes a list of internal links using LinkExtractor function
 #' in Rcrawler package. Then, information related to every p nodes in each internal link is scraped and
 #' combined in a data frame. This information include xpath, text, url, domain, and tag.
-#' @details
 #' @param input.URL An URL for searching every p nodes in its interal links
 #' @return A data frame
 #' @export

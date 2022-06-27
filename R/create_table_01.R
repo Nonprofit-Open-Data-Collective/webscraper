@@ -1,6 +1,10 @@
+#' @title
+#' Create a data frame of different URL formats
+#' @export
+
 create_table_01 <- function( input.URL ){
   result <- list()
-  
+
   original_URL <- input.URL
   normalized_URL <- normalize_url( input.URL )
   http_status_code <- httr::GET( normalized_URL )$all_headers[[1]]$status
@@ -10,17 +14,17 @@ create_table_01 <- function( input.URL ){
   active_URL <- NA
   url_version <- NA
   domain_status <- NA
-  
+
   if( check_url_status2( original_URL ) == "VALID" ){
     active_URL <- original_URL
     url_version <- "original"
     domain_status <- check_url_status2( original_URL )
-    
+
   } else if( check_url_status2( normalized_URL ) == "VALID" ){
     active_URL <- normalized_URL
     url_version <- "normalized"
     domain_status <- check_url_status2( normalized_URL )
-    
+
   } else if( is_redirected ){
     if( check_url_status2( redirected_URL ) == "VALID" ){
       active_URL <- redirected_URL
@@ -34,7 +38,7 @@ create_table_01 <- function( input.URL ){
       domain_status <- check_url_status2( root_URL )
     }
   }
-  
+
   result$org_id <- sample.urls$EIN[sample.urls$ORGURL == original_URL]
   result$org_name <- sample.urls$ORGNAME[sample.urls$ORGURL == original_URL]
   result$original_URL <- original_URL
@@ -44,6 +48,6 @@ create_table_01 <- function( input.URL ){
   result$active_URL <- active_URL
   result$url_version <- url_version
   result$domain_status <- domain_status
-  
+
   return( result )
 }
