@@ -3,7 +3,6 @@
 #' @export
 
 create_table_01 <- function( input.URL ){
-  result <- list()
 
   original_URL <- input.URL
   normalized_URL <- normalize_url( input.URL )
@@ -39,15 +38,15 @@ create_table_01 <- function( input.URL ){
     }
   }
 
-  result$org_id <- sample.urls$EIN[sample.urls$ORGURL == original_URL]
-  result$org_name <- sample.urls$ORGNAME[sample.urls$ORGURL == original_URL]
-  result$original_URL <- original_URL
-  result$normalized_URL <- normalized_URL
-  result$redirected_URL <- redirected_URL
-  result$root_URL <- root_URL
-  result$active_URL <- active_URL
-  result$url_version <- url_version
-  result$domain_status <- domain_status
+  result <- data.frame( org_id = sample.urls$EIN[sample.urls$ORGURL == original_URL],
+                        org_name =  sample.urls$ORGNAME[sample.urls$ORGURL == original_URL],
+                        original_URL,
+                        normalized_URL,
+                        redirected_URL,
+                        root_URL,
+                        active_URL,
+                        url_version,
+                        domain_status )
 
   return( result )
 }
