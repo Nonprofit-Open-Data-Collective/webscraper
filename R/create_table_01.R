@@ -1,6 +1,5 @@
 #' @title
 #' Create a data frame of different URL formats
-#' @export
 
 create_table_01 <- function( input.URL ){
 
