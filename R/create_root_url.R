@@ -3,7 +3,7 @@
 #' @description
 #' Creates the root URL of a given URL. Function can only take a object of length 1 in order to work
 #' @param input.URL Specified URL string
-#' @return Root of imputted URL
+#' @return Root of inputted URL
 #' @export
 
 create_root_url <- function(input.URL){
