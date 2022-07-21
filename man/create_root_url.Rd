@@ -10,7 +10,7 @@ create_root_url(input.URL)
 \item{input.URL}{Specified URL string}
 }
 \value{
-Root of imputted URL
+Root of inputted URL
 }
 \description{
 Creates the root URL of a given URL. Function can only take a object of length 1 in order to work
