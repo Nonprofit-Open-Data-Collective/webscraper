@@ -18,14 +18,14 @@ create_table <- function( input ){
 
   if( length( input )== 1 ){
 
-    URL.frame <- create_table_01( input )
+    URL.frame <- get_url_formats( input )
 
   }else{
 
     URL.frame <- data.frame()
 
     for( i in 1:length( input ) ){
-      URL.table <- create_table_01( input[i] )
+      URL.table <- get_url_formats( input[i] )
       URL.frame <- rbind( URL.frame, URL.table )
     }
 
