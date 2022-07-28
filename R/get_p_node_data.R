@@ -43,7 +43,9 @@ get_p_node_data <- function( input.URL ){
     results.list[[i]] <- dplyr::bind_cols(list(input.URL=input.URL.list[[i]], redirected.URL=domain.list[[i]], URL=URL.list[[i]], page=page.list[[i]], xpath=xpath.list[[i]], text=text.list[[i]], tag=tag.list[[i]]))
   }
 
-  results.df <- dplyr::bind_rows( results.list )
+  results.df <- dplyr::bind_rows( results.list ) %>%
+    dplyr::mutate(text = stringr::str_squish( text )) %>%
+    dplyr::filter( nchar(text) > 0 )
 
   return( as.data.frame(results.df) )
 }
