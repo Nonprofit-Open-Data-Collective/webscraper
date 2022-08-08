@@ -2,7 +2,6 @@
 
 export("%>%")
 export(check_url_status)
-export(check_url_status2)
 export(create_root_url)
 export(create_table)
 export(get_links)
