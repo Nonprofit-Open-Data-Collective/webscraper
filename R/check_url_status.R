@@ -2,7 +2,7 @@
 #' Checks URLS Status
 #' @export
 
-check_url_status2 <- function( input.URL ){
+check_url_status <- function( input.URL ){
 
   URL_Exists <- RCurl::url.exists( input.URL )
   URL_Active <- "Success" == tryCatch( httr::http_status( httr::GET( input.URL ) )[[1]], error = function( e ){ NA } )
