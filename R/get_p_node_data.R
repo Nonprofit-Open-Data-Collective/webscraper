@@ -30,6 +30,9 @@ get_p_node_data <- function( input.URL ){
   tag.list <- NULL
 
   for ( i in 1:length(internal.links) ){
+
+    if(httr::http_error( internal.links[i] ) == TRUE ){next}
+
     node.list[[i]] <- xml2::read_html(internal.links[i]) %>% xml2::xml_find_all('//*/p')
     xpath.list[[i]] <- node.list[[i]] %>% xml2::xml_path()
     text.list[[i]] <- node.list[[i]] %>% xml2::xml_text()
