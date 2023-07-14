@@ -9,47 +9,144 @@ R package to scrape content like mission statements and social media handles fro
 
 ## Usage
 
-The package operates by doing the following:
+Install: 
 
-1. User provides an org URL
+```r
+devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
+library( webscraper )
+```
 
-   -- ( **create_table_01()** )  --
+### Demo Get Nodes Function
 
-2. clean and parse  
-  - save original version  ( **create_table_01()** )
-  - create normalized version ("http://some-name.com")   ( **normalize_url()** )
-  - create root url from normalized  ( **creat_root_url()** )
-3. check URL status  ( **check_url_status()** ) --> error in RCurl::url.exists("WWW.BACASMAINE.ORG")
+```r
+url <- "https://www.mainewelfaredirectors.org"
+dat <- get_p_node_data( url )
+head( dat ) %>% pander(style="grid")
+```
+
+
+```
++-----+--------------------------------+
+| tag |              text              |
++=====+================================+
+|  p  | General Assistance | Referral  |
+|     |           | Advocacy           |
++-----+--------------------------------+
+|  p  |     Establish and promote      |
+|     |    equitable, efficient and    |
+|     | standardized administration of |
+|     |      General Assistance.       |
++-----+--------------------------------+
+|  p  |   Encourage the professional   |
+|     |    development, growth, and    |
+|     |  knowledge base of those who   |
+|     | administer General Assistance. |
++-----+--------------------------------+
+|  p  |        Advocate for the        |
+|     |  municipalities and citizens   |
+|     |         that we serve.         |
++-----+--------------------------------+
+|  p  |  Actively promote and present  |
+|     |    our program needs to the    |
+|     |  Legislature and citizens by   |
+|     |   creating a greater public    |
+|     |  awareness of the importance   |
+|     | and the benefits of equitable, |
+|     |   efficient and standardized   |
+|     |       General Assistance       |
+|     |        administration.         |
++-----+--------------------------------+
+|  p  | Click here to download current |
+|     |          MWDA Bylaws           |
++-----+--------------------------------+
+
++--------------------------------------------------+-------------+
+|                       URL                        |    page     |
++==================================================+=============+
+| http://mainewelfaredirectors.org/association.htm | association |
++--------------------------------------------------+-------------+
+| http://mainewelfaredirectors.org/association.htm | association |
++--------------------------------------------------+-------------+
+| http://mainewelfaredirectors.org/association.htm | association |
++--------------------------------------------------+-------------+
+| http://mainewelfaredirectors.org/association.htm | association |
++--------------------------------------------------+-------------+
+| http://mainewelfaredirectors.org/association.htm | association |
++--------------------------------------------------+-------------+
+| http://mainewelfaredirectors.org/association.htm | association |
++--------------------------------------------------+-------------
+
++-----------------------------------------------------------+
+|                           xpath                           |
++===========================================================+
+|                /html/body/table/tr[2]/td/p                |
++-----------------------------------------------------------+
+| /html/body/table/tr[3]/td[2]/strong/blockquote/ul/li[1]/p |
++-----------------------------------------------------------+
+| /html/body/table/tr[3]/td[2]/strong/blockquote/ul/li[2]/p |
++-----------------------------------------------------------+
+| /html/body/table/tr[3]/td[2]/strong/blockquote/ul/li[3]/p |
++-----------------------------------------------------------+
+| /html/body/table/tr[3]/td[2]/strong/blockquote/ul/li[4]/p |
++-----------------------------------------------------------+
+|    /html/body/table/tr[3]/td[2]/strong/blockquote/p[1]    |
++-----------------------------------------------------------+
+
+```
+
+### Sample Org Dataset
+
+To collect multiple at a time:  
+
+```r
+load_test_urls()
+head( sample.urls )
+urls <- sample.urls$ORGURL
+results.list <- lapply( urls, get_p_node_data )
+d <- dplyr::bind_rows( results.list )
+```
+
+### Process Overview
+
+The package collects data following this process: 
+
+```
+1. user provides a URL
+2. normalize the URL   
+  - save original URL 
+  - create normalized version ("http://some-name.com")  >> normalize_url()
+  - create root url from normalized  >> creat_root_url()
+3. check URL status >> check_url_status() 
   - results: exists & active  --> load website (4)
-  - exists & not responding  --> try root domain
-  - does not exist  --> try root domain
-4. identify active host URL 
+  - exists & not responding   --> try root domain
+  - does not exist            --> try root domain
+4. visit page if URL is active 
   - if redirected, capture redirect 
 
------>  table 1 returned here 
-
-
+----->  table 1 captures URL status
 
 5. load website 
   - catalog all internal links on the landing page for snowball sample
   - search for contact info (not yet implemented)
     - social media sites
-    - social media handle
-    - (email?)
+    - social media handles
+    - email?
 
------>  table 3 returned here  (not yet implemented)
+----->  table 2 captures links and handles
 
 7. build node list on current page
-  - capture node data
-  - creating node meta-data
-8. drill down and repeat (how many levels?)
-  - at completion return nodes table (table-02)
+  - capture data for specified node types
+  - capture node meta-data (page position, tag attributes) for context
+8. drill down and repeat for one level of links
+  - at completion return nodes table
   
------>  table 2 returned here 
+----->  table 3 contains page content atomized by tags
+```
 
 
+Functions should return the following tables: 
 
-
+```
 table-01 (create_table_01 function)
   - org name
   - org id (unique key)
@@ -61,15 +158,7 @@ table-01 (create_table_01 function)
   - url_version - version of the URL that works: original, normalized, redirect, or root 
   - domain_status - change URL.Exists, HTTP.Status and valid to "domain_status": VALID, EXISTS (but http.status = F), DNE (does not exist)
 
-Function try URLS in the following order:
-1. original url
-2. normalized url 
-3. redirected url 
-4. root url 
-
-
-
-table-02  ( get_p_nodes function )
+table-03  ( get_p_nodes function )
   - org name
   - org id (unique key)
   - date of data capture
@@ -77,54 +166,32 @@ table-02  ( get_p_nodes function )
   - subdomain 
   - xpath
   - node type
-  - attributes (html class, etc)
+  - attributes (html class, id, etc)
   - node text
 
-table-03 (social media) - one-to-many (many accounts for one org)
+table-02 (social media) - one-to-many (many accounts for one org)
   - org id
   - working url
   - subdomain 
   - social media type (twitter, linkedin, facebook)
   - ID - handle or account id
+```
   
-  
+
+A typical workflow might start by processing all raw URLs in a list to generate table-01, which would report active versus dead or misspelled domains. 
+
+Table-01 could then serve as the sample frame for subsequent steps. 
+
+The user would specify things like site depth to probe (level 0 is the domain landing page, level 1 is all links on the landing page, level 2 is all new links on level 1 pages, etc.), and the types of nodes to collect (typically things like p=paragraphs, ul=lists, th/td=tables). 
 
 
 
 
-## Use
-
-Install: 
-
-```r
-devtools::install_github( "Nonprofit-Open-Data-Collective/webscraper" )
-library( webscraper )
-```
 
 
+### Dependencies 
 
-### Before Syncing New Code to GitHub
-
-```r
-# update documentation
-setwd( "webscraper" )
-devtools::document()
-# update code
-setwd( ".." )
-devtools::install( "webscraper" )
-```
-
-### Demo Get Nodes Function
-
-```r
-# example URL
-url <- "HTTP://GMFD.ORG/GMFRA/GMFRAINDEX.HTM"
-dat <- get_p_node_data( url )
-head( as.data.frame( dat ) )
-```
-
-
-We use the following packages: 
+**webscraper** utilizes the following dependencies: 
 
 ```r
 library( dplyr )     # data wrangling 
@@ -139,19 +206,6 @@ library( rvest )     # web scraping in R
 
 
 
-### Sample Org Dataset
-
-For a small sample try: 
-
-```r
-load_test_urls()
-head( sample.urls )
-
-URLs <- sample.urls$ORGURL
-
-create_table_01( URLs[1] )
-
-```
 
 
 <br>
@@ -163,7 +217,19 @@ create_table_01( URLs[1] )
 <br>
 
 
-## Project Management 
+## Project Management for Package Dev 
+
+
+### Before Syncing New Code to GitHub
+
+```r
+# update documentation
+setwd( "webscraper" )
+devtools::document()
+# update code
+setwd( ".." )
+devtools::install( "webscraper" )
+```
 
 ### [:ballot_box_with_check: KanBan Board](https://github.com/Nonprofit-Open-Data-Collective/webscraper/projects/1) 
 
