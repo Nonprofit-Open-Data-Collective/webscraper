@@ -146,17 +146,17 @@ The package collects data following this process:
 
 Functions should return the following tables: 
 
-```
-table-01 (create_table_01 function)
-  - org name
-  - org id (unique key)
-  - **original_URL** - raw web domain reported by the org
-  - **normalized_URL** 
-  - **redirected_URL**
-  - root_URL - root url of original url - http://www.pets.com  [ ROOT VERSION - normalize first, then parse lowest level ]
-  - **active_URL** change tested_URL to active_URL - domain that works  
-  - url_version - version of the URL that works: original, normalized, redirect, or root 
-  - domain_status - change URL.Exists, HTTP.Status and valid to "domain_status": VALID, EXISTS (but http.status = F), DNE (does not exist)
+
+table-01 
+  - **org name**
+  - **org id**:  unique key
+  - **original_URL**: raw string with unvalidated text of web domain
+  - **normalized_URL**: cleaned and put in standard http format
+  - **root_URL**: normalize first, then parse lowest level
+  - **redirect_URL**: capture redirects
+  - **url_version**: original, normalized, redirect, or root version that was tested  
+  - **domain_status**: VALID, EXISTS (but http.status = F), DNE (does not exist)
+  - **active_URL**: best domain version to use  
 
 table-03  ( get_p_nodes function )
   - org name
@@ -175,7 +175,7 @@ table-02 (social media) - one-to-many (many accounts for one org)
   - subdomain 
   - social media type (twitter, linkedin, facebook)
   - ID - handle or account id
-```
+
   
 
 A typical workflow might start by processing all raw URLs in a list to generate table-01, which would report active versus dead or misspelled domains. 
