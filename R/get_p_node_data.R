@@ -12,7 +12,7 @@
 #' input.URL <- "HTTP://GMFD.ORG/GMFRA/GMFRAINDEX.HTM"
 #' get_p_node_data( input.URL )
 #' @importFrom magrittr %>%
-get_p_node_data2 <- function( input.URL )
+get_p_node_data <- function( input.URL )
 {
   redirected.URL <- get_redirected_url( input.URL )
   internal.links <- Rcrawler::LinkExtractor( url = redirected.URL )$InternalLinks
@@ -68,6 +68,7 @@ get_p_node_data2 <- function( input.URL )
   df$page <- gsub( "^(/)(.*)(.[a-zA-Z]{3,4}$)", "\\2", df$page )
 
   return( df )
+  
 }
 
 
